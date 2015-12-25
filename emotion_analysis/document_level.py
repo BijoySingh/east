@@ -1,4 +1,3 @@
-from collections import defaultdict
 from common.base_classes import DocumentLevel
 
 __author__ = 'bijoy'

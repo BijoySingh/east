@@ -1,12 +1,10 @@
-from utilities.text import Text
 from progressbar import ProgressBar
-from emotion_analysis.data import WordEmotionScore
-from utilities.storage import Storage
+from .data import WordEmotionScore
+from .emotions import Emotions
 from common.base_classes import SentenceLevel
-from emotion_analysis.emotions import Emotions
+from utilities.storage import Storage
 from sklearn.svm import SVC
 from sklearn.naive_bayes import GaussianNB, BernoulliNB, MultinomialNB
-from collections import defaultdict
 import random
 
 __author__ = 'bijoy'

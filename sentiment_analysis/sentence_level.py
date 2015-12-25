@@ -1,6 +1,5 @@
-from utilities.text import Text
 from progressbar import ProgressBar
-from sentiment_analysis.data import SentiWordNet, OpinionLexicon
+from .data import SentiWordNet, OpinionLexicon
 from common.base_classes import SentenceLevel
 from sklearn.svm import SVC
 from sklearn.naive_bayes import GaussianNB, BernoulliNB, MultinomialNB
@@ -8,7 +7,6 @@ from sklearn.linear_model import LogisticRegression
 from collections import defaultdict
 from .sentiments import Sentiments
 from utilities.storage import Storage
-import random
 
 __author__ = 'bijoy'
 
