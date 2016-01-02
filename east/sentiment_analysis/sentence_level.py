@@ -1,12 +1,13 @@
+from collections import defaultdict
+
 from progressbar import ProgressBar
 from .data import SentiWordNet, OpinionLexicon
-from common.base_classes import SentenceLevel
+from east.common.base_classes import SentenceLevel
 from sklearn.svm import SVC
 from sklearn.naive_bayes import GaussianNB, BernoulliNB, MultinomialNB
 from sklearn.linear_model import LogisticRegression
-from collections import defaultdict
 from .sentiments import Sentiments
-from utilities.storage import Storage
+from east.utilities.storage import Storage
 
 __author__ = 'bijoy'
 
@@ -135,7 +136,7 @@ class UnigramSentimentSVM(WordSentimentClassifier):
     """Classify on a support vector machine using the feature set of unigrams in the document"""
 
     FILENAME = 'svm_word_model'
-    WORD_LIMIT = 15000
+    WORD_LIMIT = 12000
 
     def __init__(self, allow_negation=True, filename=FILENAME):
         WordSentimentClassifier.__init__(self, allow_negation, filename)
@@ -234,3 +235,24 @@ class BigramSentimentBernoulliNB(BigramSentimentClassifier):
     def __init__(self, allow_negation=True, filename=FILENAME):
         BigramSentimentClassifier.__init__(self, allow_negation, filename)
         self.engine = BernoulliNB()
+
+
+class BigramSentimentMaxEnt(BigramSentimentClassifier):
+    """Classify on a maximum entropy model using the feature set of bigrams in the document"""
+
+    FILENAME = 'bigram_bernoulli_nb_word_model'
+
+    def __init__(self, allow_negation=True, filename=FILENAME):
+        BigramSentimentClassifier.__init__(self, allow_negation, filename)
+        self.engine = LogisticRegression()
+
+
+class BigramSentimentSVM(BigramSentimentClassifier):
+    """Classify on a support vector machine model using the feature set of bigrams in the document"""
+
+    FILENAME = 'bigram_bernoulli_nb_word_model'
+    WORD_LIMIT = 12000
+
+    def __init__(self, allow_negation=True, filename=FILENAME):
+        BigramSentimentClassifier.__init__(self, allow_negation, filename)
+        self.engine = SVC()

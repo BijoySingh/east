@@ -1,7 +1,8 @@
-from utilities.storage import Storage
-from common.base_classes import DataSet
 from collections import defaultdict
 import re
+
+from east.utilities.storage import Storage
+from east.common.base_classes import DataSet
 
 __author__ = 'bijoy'
 
@@ -20,17 +21,17 @@ class MovieReviewDataSet(DataSet):
     def read(self):
         mapping = defaultdict(list)
 
-        data_set_file = open(self.POSITIVE_DATA_SET, "r")
+        data_set_file = open(self.get_absolute_path(self.POSITIVE_DATA_SET), "r")
         for line in data_set_file:
             mapping["positive"].append(line)
         data_set_file.close()
 
-        data_set_file = open(self.NEGATIVE_DATA_SET, "r")
+        data_set_file = open(self.get_absolute_path(self.NEGATIVE_DATA_SET), "r")
         for line in data_set_file:
             mapping["negative"].append(line)
         data_set_file.close()
 
-        Storage.dump(self.FILENAME, mapping)
+        Storage.dump(self.get_absolute_path(self.FILENAME), mapping)
         return mapping
 
 
@@ -49,7 +50,7 @@ class OpinionLexicon(DataSet):
     def read(self):
         mapping = dict()
         started_reading = False
-        data_set_file = open(self.POSITIVE_DATA_SET, "r")
+        data_set_file = open(self.get_absolute_path(self.POSITIVE_DATA_SET), "r")
         for line in data_set_file:
             if line.strip() == '####START####':
                 started_reading = True
@@ -58,7 +59,7 @@ class OpinionLexicon(DataSet):
         data_set_file.close()
 
         started_reading = False
-        data_set_file = open(self.NEGATIVE_DATA_SET, "r")
+        data_set_file = open(self.get_absolute_path(self.NEGATIVE_DATA_SET), "r")
         for line in data_set_file:
             if line.strip() == '####START####':
                 started_reading = True
@@ -97,7 +98,7 @@ class SentiWordNet(DataSet):
     def read(self):
         mapping = dict()
 
-        data_set_file = open(self.DATA_SET, "r")
+        data_set_file = open(self.get_absolute_path(self.DATA_SET), "r")
         for line in data_set_file:
             if line[0] == '#':
                 continue
@@ -113,7 +114,7 @@ class SentiWordNet(DataSet):
 
         data_set_file.close()
 
-        Storage.dump(self.FILENAME, mapping)
+        Storage.dump(self.get_absolute_path(self.FILENAME), mapping)
         return mapping
 
     def get_sentiment_scores(self, words):

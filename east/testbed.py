@@ -1,9 +1,9 @@
-from emotion_analysis.sentence_level import MaxEmotionScore, EmotionScoreSVM, WordEmotionSVM, \
-    WordEmotionGaussianNB, WordEmotionBernoulliNB, WordEmotionMultinomialNB, EmotionScoreGaussianNB, \
+from east.emotion_analysis.sentence_level import MaxEmotionScore, EmotionScoreSVM, UnigramEmotionSVM, \
+    UnigramEmotionGaussianNB, UnigramEmotionBernoulliNB, UnigramEmotionMultinomialNB, EmotionScoreGaussianNB, \
     EmotionScoreBernoulliNB, EmotionScoreMultinomialNB
-from emotion_analysis.data import TweetDataSet
-from sentiment_analysis.data import MovieReviewDataSet
-from sentiment_analysis.sentence_level import UnigramSentimentSVM, MaxSentimentScore, \
+from east.emotion_analysis.data import TweetDataSet
+from east.sentiment_analysis.data import MovieReviewDataSet
+from east.sentiment_analysis.sentence_level import UnigramSentimentSVM, MaxSentimentScore, \
     UnigramSentimentBernoulliNB, UnigramSentimentGaussianNB, UnigramSentimentMultinomialNB,\
     OpinionLexiconSentimentCount, UnigramSentimentMaxEnt, BigramSentimentBernoulliNB,\
     BigramSentimentMultinomialNB, BigramSentimentGaussianNB
@@ -19,15 +19,15 @@ max_emotion = MaxEmotionScore()
 tweet_data_set.test_algorithm(max_emotion)
 
 # WordEmotionGaussianNB :
-gaussian_word = WordEmotionGaussianNB()
+gaussian_word = UnigramEmotionGaussianNB()
 tweet_data_set.test_algorithm(gaussian_word)
 
 # WordEmotionMultinomialNB :
-multinomial_word = WordEmotionMultinomialNB()
+multinomial_word = UnigramEmotionMultinomialNB()
 tweet_data_set.test_algorithm(multinomial_word)
 
 # WordEmotionBernoulliNB :
-bernoulli_word = WordEmotionBernoulliNB()
+bernoulli_word = UnigramEmotionBernoulliNB()
 tweet_data_set.test_algorithm(bernoulli_word)
 
 # EmotionScoreGaussianNB :
@@ -47,7 +47,7 @@ svm_emotion = EmotionScoreSVM()
 tweet_data_set.test_algorithm(svm_emotion)
 
 # WordEmotionSVM :
-svm_word = WordEmotionSVM()
+svm_word = UnigramEmotionSVM()
 tweet_data_set.test_algorithm(svm_word)
 
 #######################################################################

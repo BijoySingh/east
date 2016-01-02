@@ -1,9 +1,9 @@
-from emotion_analysis.sentence_level import MaxEmotionScore, EmotionScoreSVM, WordEmotionSVM, \
-    WordEmotionGaussianNB, WordEmotionBernoulliNB, WordEmotionMultinomialNB, EmotionScoreGaussianNB, \
+from east.emotion_analysis.sentence_level import MaxEmotionScore, EmotionScoreSVM, UnigramEmotionSVM, \
+    UnigramEmotionGaussianNB, UnigramEmotionBernoulliNB, UnigramEmotionMultinomialNB, EmotionScoreGaussianNB, \
     EmotionScoreBernoulliNB, EmotionScoreMultinomialNB
-from emotion_analysis.data import TweetDataSet
-from sentiment_analysis.data import MovieReviewDataSet
-from sentiment_analysis.sentence_level import UnigramSentimentSVM, MaxSentimentScore, \
+from east.emotion_analysis.data import TweetDataSet
+from east.sentiment_analysis.data import MovieReviewDataSet
+from east.sentiment_analysis.sentence_level import UnigramSentimentSVM, MaxSentimentScore, \
     UnigramSentimentBernoulliNB, UnigramSentimentGaussianNB, UnigramSentimentMultinomialNB,\
     OpinionLexiconSentimentCount, UnigramSentimentMaxEnt, BigramSentimentBernoulliNB,\
     BigramSentimentMultinomialNB, BigramSentimentGaussianNB
@@ -19,15 +19,15 @@ max_emotion = MaxEmotionScore()
 max_emotion.test(tweet_data_set.get_testing_set())
 
 # WordEmotionGaussianNB : 40.04%
-gaussian_word = WordEmotionGaussianNB()
+gaussian_word = UnigramEmotionGaussianNB()
 gaussian_word.test(tweet_data_set.get_testing_set())
 
 # WordEmotionMultinomialNB : 44.80%
-multinomial_word = WordEmotionMultinomialNB()
+multinomial_word = UnigramEmotionMultinomialNB()
 multinomial_word.test(tweet_data_set.get_testing_set())
 
 # WordEmotionBernoulliNB : 44.15%
-bernoulli_word = WordEmotionBernoulliNB()
+bernoulli_word = UnigramEmotionBernoulliNB()
 bernoulli_word.test(tweet_data_set.get_testing_set())
 
 # EmotionScoreGaussianNB : 44.15%
@@ -47,7 +47,7 @@ svm_emotion = EmotionScoreSVM()
 svm_emotion.test(tweet_data_set.get_testing_set())
 
 # WordEmotionSVM : 31.16%
-svm_word = WordEmotionSVM()
+svm_word = UnigramEmotionSVM()
 svm_word.test(tweet_data_set.get_testing_set())
 
 #######################################################################

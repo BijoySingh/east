@@ -1,14 +1,14 @@
-from emotion_analysis.sentence_level import *
-from emotion_analysis.document_level import *
-from sentiment_analysis.sentence_level import *
-from sentiment_analysis.document_level import *
+from east.emotion_analysis.sentence_level import *
+from east.emotion_analysis.document_level import *
+from east.sentiment_analysis.sentence_level import *
+from east.sentiment_analysis.document_level import *
 
-from utilities.text import Text
+from east.utilities.text import Text
 
 __author__ = 'bijoy'
 
 
-class East:
+class Toolkit:
     """
     API class, acts as a quick interface for integration into other python applications
     """
@@ -18,9 +18,9 @@ class East:
                     BigramSentimentBernoulliNB, BigramSentimentGaussianNB,
                     UnigramSentimentSVM, MaxSentimentScore]
     dl_sentiment = [MostFrequentSentiment, LastSentiment, MostContinuousSentiment]
-    sl_emotion = [EmotionScoreMultinomialNB, EmotionScoreSVM, WordEmotionMultinomialNB,
-                  WordEmotionBernoulliNB, EmotionScoreGaussianNB, WordEmotionGaussianNB,
-                  MaxEmotionScore, WordEmotionSVM, EmotionScoreBernoulliNB]
+    sl_emotion = [EmotionScoreMultinomialNB, EmotionScoreSVM, UnigramEmotionMultinomialNB,
+                  UnigramEmotionBernoulliNB, EmotionScoreGaussianNB, UnigramEmotionGaussianNB,
+                  MaxEmotionScore, UnigramEmotionSVM, EmotionScoreBernoulliNB]
     dl_emotion = [MostFrequentEmotion, LastEmotion, MostContinuousEmotion]
 
     def __init__(self, sentiment=False, sentence_level=0, document_level=0, club=False):
@@ -158,10 +158,10 @@ class East:
         :return: help string
         """
         if emotion and sentence:
-            return "Emotion Analysis: " + East.get_help_string(East.sl_emotion)
+            return "Emotion Analysis: " + Toolkit.get_help_string(Toolkit.sl_emotion)
         elif emotion and not sentence:
-            return "Emotion Analysis: " + East.get_help_string(East.dl_emotion)
+            return "Emotion Analysis: " + Toolkit.get_help_string(Toolkit.dl_emotion)
         elif not emotion and sentence:
-            return "Sentiment Analysis: " + East.get_help_string(East.sl_sentiment)
+            return "Sentiment Analysis: " + Toolkit.get_help_string(Toolkit.sl_sentiment)
         elif not emotion and not sentence:
-            return "Sentiment Analysis: " + East.get_help_string(East.dl_sentiment)
+            return "Sentiment Analysis: " + Toolkit.get_help_string(Toolkit.dl_sentiment)

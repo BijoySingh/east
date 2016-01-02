@@ -1,11 +1,13 @@
+import random
+
 from progressbar import ProgressBar
 from .data import WordEmotionScore
 from .emotions import Emotions
-from common.base_classes import SentenceLevel
-from utilities.storage import Storage
+from east.common.base_classes import SentenceLevel
+from east.utilities.storage import Storage
 from sklearn.svm import SVC
 from sklearn.naive_bayes import GaussianNB, BernoulliNB, MultinomialNB
-import random
+from sklearn.linear_model import LogisticRegression
 
 __author__ = 'bijoy'
 
@@ -75,7 +77,7 @@ class EmotionScoreSVM(EmotionScoreClassifier):
 
 
 class EmotionScoreGaussianNB(EmotionScoreClassifier):
-    """Trains an gaussian naive bayes based on the Emotion Scores of the Sentence"""
+    """Trains a gaussian naive bayes based on the Emotion Scores of the Sentence"""
 
     FILENAME = 'gaussian_nb_emotion_model'
 
@@ -85,7 +87,7 @@ class EmotionScoreGaussianNB(EmotionScoreClassifier):
 
 
 class EmotionScoreMultinomialNB(EmotionScoreClassifier):
-    """Trains an multinomial naive bayes based on the Emotion Scores of the Sentence"""
+    """Trains a multinomial naive bayes based on the Emotion Scores of the Sentence"""
 
     FILENAME = 'multinomial_nb_emotion_model'
 
@@ -95,13 +97,23 @@ class EmotionScoreMultinomialNB(EmotionScoreClassifier):
 
 
 class EmotionScoreBernoulliNB(EmotionScoreClassifier):
-    """Trains an bernoulli naive classifier based on the Emotion Scores of the Sentence"""
+    """Trains a bernoulli naive classifier based on the Emotion Scores of the Sentence"""
 
     FILENAME = 'bernoulli_nb_emotion_model'
 
     def __init__(self, allow_negation=False, filename=FILENAME):
         EmotionScoreClassifier.__init__(self, allow_negation, filename)
         self.engine = BernoulliNB()
+
+
+class EmotionScoreMaxEnt(EmotionScoreClassifier):
+    """Trains a maximum entropy based on the Emotion Scores of the Sentence"""
+
+    FILENAME = 'bernoulli_nb_emotion_model'
+
+    def __init__(self, allow_negation=False, filename=FILENAME):
+        EmotionScoreClassifier.__init__(self, allow_negation, filename)
+        self.engine = LogisticRegression()
 
 
 class MaxEmotionScore(SentenceLevel):
@@ -130,7 +142,7 @@ class MaxEmotionScore(SentenceLevel):
         return best_emotion
 
 
-class WordEmotionClassifier(SentenceLevel):
+class UnigramEmotionClassifier(SentenceLevel):
     """
     Classify using the feature set of emotion scores of a sentence
     """
@@ -218,45 +230,55 @@ class WordEmotionClassifier(SentenceLevel):
         return Emotions.get_emotion_for_id(emotion_id)
 
 
-class WordEmotionSVM(WordEmotionClassifier):
+class UnigramEmotionSVM(UnigramEmotionClassifier):
     """
     Trains a support vector machine naive bayes classifier over a feature set of unigrams
     """
     FILENAME = 'svm_word_model'
 
     def __init__(self, allow_negation=True, filename=FILENAME):
-        WordEmotionClassifier.__init__(self, allow_negation, filename)
+        UnigramEmotionClassifier.__init__(self, allow_negation, filename)
         self.engine = SVC()
 
 
-class WordEmotionGaussianNB(WordEmotionClassifier):
+class UnigramEmotionGaussianNB(UnigramEmotionClassifier):
     """
     Trains a gaussian naive bayes classifier over a feature set of unigrams
     """
     FILENAME = 'gaussian_nb_word_model'
 
     def __init__(self, allow_negation=True, filename=FILENAME):
-        WordEmotionClassifier.__init__(self, allow_negation, filename)
+        UnigramEmotionClassifier.__init__(self, allow_negation, filename)
         self.engine = GaussianNB()
 
 
-class WordEmotionBernoulliNB(WordEmotionClassifier):
+class UnigramEmotionBernoulliNB(UnigramEmotionClassifier):
     """
     Trains a bernoulli naive bayes classifier over a feature set of unigrams
     """
     FILENAME = 'bernoulli_nb_word_model'
 
     def __init__(self, allow_negation=True, filename=FILENAME):
-        WordEmotionClassifier.__init__(self, allow_negation, filename)
+        UnigramEmotionClassifier.__init__(self, allow_negation, filename)
         self.engine = BernoulliNB()
 
 
-class WordEmotionMultinomialNB(WordEmotionClassifier):
+class UnigramEmotionMultinomialNB(UnigramEmotionClassifier):
     """
     Trains a multinomial naive bayes classifier over a feature set of unigrams
     """
     FILENAME = 'multinomial_nb_word_model'
 
     def __init__(self, allow_negation=True, filename=FILENAME):
-        WordEmotionClassifier.__init__(self, allow_negation, filename)
+        UnigramEmotionClassifier.__init__(self, allow_negation, filename)
         self.engine = MultinomialNB()
+
+class UnigramEmotionMaxEnt(UnigramEmotionClassifier):
+    """
+    Trains a maximum entropy classifier over a feature set of unigrams
+    """
+    FILENAME = 'multinomial_nb_word_model'
+
+    def __init__(self, allow_negation=True, filename=FILENAME):
+        UnigramEmotionClassifier.__init__(self, allow_negation, filename)
+        self.engine = LogisticRegression()

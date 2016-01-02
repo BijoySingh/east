@@ -1,7 +1,10 @@
 __author__ = 'bijoy'
-from utilities.text import Text
-from utilities.storage import Storage
+import os
+from east import BASE_DIR
 from collections import defaultdict
+
+from east.utilities.text import Text
+from east.utilities.storage import Storage
 from progressbar import ProgressBar
 
 
@@ -35,13 +38,22 @@ class DataSet:
         self.normalize_classes = normalize_classes
         self.load()
 
+    @staticmethod
+    def get_absolute_path(*args):
+        """
+        Returns the path of a file from root
+        :param args: the arguments of the path
+        :return: the absolute path
+        """
+        return os.path.join(BASE_DIR, *args)
+
     def load(self):
         """
         Loads the data set from the variable / data file / pickled file
         :return: the data set
         """
         if not self.mapping:
-            self.mapping = Storage.load(self.FILENAME)
+            self.mapping = Storage.load(self.get_absolute_path(self.FILENAME))
             if not self.mapping:
                 self.mapping = self.read()
 
@@ -163,7 +175,7 @@ class SentenceLevel:
     FILENAME = 'default'
 
     def __init__(self, filename=FILENAME):
-        self.filename = self.FOLDER + filename + ".pickled"
+        self.filename = os.path.join(BASE_DIR, self.FOLDER, filename + ".pickled")
         self.text_utility = Text()
 
     def train(self, training_set, save_file=True):

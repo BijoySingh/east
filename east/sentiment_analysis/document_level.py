@@ -1,4 +1,4 @@
-from common.base_classes import DocumentLevel
+from east.common.base_classes import DocumentLevel
 
 __author__ = 'bijoy'
 

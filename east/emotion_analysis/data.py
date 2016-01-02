@@ -1,8 +1,9 @@
 from collections import defaultdict
-from utilities.storage import Storage
-from common.base_classes import DataSet
-from utilities.text import Text
 import random
+
+from east.utilities.storage import Storage
+from east.common.base_classes import DataSet
+from east.utilities.text import Text
 
 __author__ = 'bijoy'
 
@@ -21,7 +22,7 @@ class WordEmotionScore(DataSet):
         mapping = defaultdict(dict)
 
         reading_started = False
-        data_set_file = open(self.DATA_SET, "r")
+        data_set_file = open(self.get_absolute_path(self.DATA_SET), "r")
         for line in data_set_file:
             if "######" in line:
                 reading_started = True
@@ -33,7 +34,7 @@ class WordEmotionScore(DataSet):
                 mapping[word][emotion] = float(score)
 
         data_set_file.close()
-        Storage.dump(self.FILENAME, mapping)
+        Storage.dump(self.get_absolute_path(self.FILENAME), mapping)
         return mapping
 
     def get_emotion_scores(self, words):
@@ -73,7 +74,7 @@ class TweetDataSet(DataSet):
     def read(self):
         mapping = defaultdict(list)
 
-        data_set_file = open(self.DATA_SET, "r")
+        data_set_file = open(self.get_absolute_path(self.DATA_SET), "r")
         for line in data_set_file:
             line = line[19:]
             sentence, emotion = line.split("::")
@@ -90,5 +91,5 @@ class TweetDataSet(DataSet):
                 random.shuffle(mapping[emotion])
                 mapping[emotion] = mapping[emotion][:min_lines]
 
-        Storage.dump(self.FILENAME, mapping)
+        Storage.dump(self.get_absolute_path(self.FILENAME), mapping)
         return mapping
